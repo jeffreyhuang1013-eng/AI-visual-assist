@@ -47,6 +47,7 @@ class VisualAssistV1Tests(unittest.TestCase):
         )
 
         app.process_frame()
+        self.assertEqual([], speaker.utterances)
         app.process_frame()
 
         self.assertEqual("phone is about 0.7 meters away.", speaker.utterances[0])
