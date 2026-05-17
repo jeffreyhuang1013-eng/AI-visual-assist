@@ -7,6 +7,7 @@ from typing import Deque, Iterable, List, Optional, Protocol, Sequence, Tuple
 import time
 
 WHERE_IS_PREFIX = "where is "
+DEMO_DURATION_SECONDS = 1.6
 
 
 @dataclass(frozen=True)
@@ -215,4 +216,4 @@ def build_default_app(commands: Optional[Iterable[str]] = None) -> VisualAssistV
 
 if __name__ == "__main__":
     app = build_default_app(commands=["what do you see", "where is bottle", "recent objects"])
-    app.run(seconds=1.6, hz=2.0)
+    app.run(seconds=DEMO_DURATION_SECONDS, hz=2.0)
