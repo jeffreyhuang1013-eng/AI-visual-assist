@@ -160,7 +160,15 @@ class VisualAssistV1:
         return observed, command
 
     def run(self, seconds: float = 5.0, hz: float = 2.0) -> None:
-        """Run the real-time detection loop for a fixed duration."""
+        """Run the real-time detection loop.
+
+        Args:
+            seconds: Total runtime duration, must be greater than 0.
+            hz: Target loop frequency in frames per second, must be greater than 0.
+
+        Raises:
+            ValueError: If seconds or hz are non-positive.
+        """
         if seconds <= 0:
             raise ValueError(f"seconds must be greater than 0, got {seconds}")
         if hz <= 0:
