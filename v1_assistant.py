@@ -157,11 +157,15 @@ class VisualAssistV1:
 
     def run(self, seconds: float = 5.0, hz: float = 2.0) -> None:
         """Run the real-time detection loop for a fixed duration."""
+        if hz <= 0:
+            raise ValueError("hz must be greater than 0")
         interval = 1.0 / hz
         end_time = time.monotonic() + seconds
         while time.monotonic() < end_time:
+            loop_start = time.monotonic()
             self.process_frame()
-            time.sleep(interval)
+            elapsed = time.monotonic() - loop_start
+            time.sleep(max(0.0, interval - elapsed))
 
     def _respond_to_command(self, command: str, observed: Sequence[ObservedObject]) -> str:
         normalized = command.strip().lower()

@@ -74,6 +74,18 @@ class VisualAssistV1Tests(unittest.TestCase):
 
         self.assertEqual("Recently seen objects: table, chair.", speaker.utterances[0])
 
+    def test_run_rejects_non_positive_hz(self) -> None:
+        app = VisualAssistV1(
+            detector=SimulatedObjectDetector(frames=[[DetectedObject("chair", 0.9)]]),
+            depth_estimator=SimulatedDepthEstimator(),
+            command_input=QueueVoiceCommandInput(),
+            speaker=ConsoleSpeaker(),
+            memory=RecentObjectMemory(),
+        )
+
+        with self.assertRaises(ValueError):
+            app.run(seconds=0.1, hz=0)
+
 
 if __name__ == "__main__":
     unittest.main()
