@@ -111,13 +111,16 @@ class SimulatedObjectDetector:
 
 class SimulatedDepthEstimator:
     def __init__(self, distances_m: Optional[dict[str, float]] = None) -> None:
-        self._distances_m = distances_m or {
-            "chair": 1.6,
-            "table": 2.2,
-            "bottle": 0.8,
-            "laptop": 1.1,
-            "phone": 0.7,
-        }
+        if distances_m is None:
+            self._distances_m = {
+                "chair": 1.6,
+                "table": 2.2,
+                "bottle": 0.8,
+                "laptop": 1.1,
+                "phone": 0.7,
+            }
+        else:
+            self._distances_m = distances_m
 
     def estimate_meters(self, obj: DetectedObject) -> Optional[float]:
         return self._distances_m.get(obj.name.lower())
@@ -159,7 +162,7 @@ class VisualAssistV1:
     def run(self, seconds: float = 5.0, hz: float = 2.0) -> None:
         """Run the real-time detection loop for a fixed duration."""
         if hz <= 0:
-            raise ValueError("hz must be greater than 0")
+            raise ValueError(f"hz must be greater than 0, got {hz}")
         interval = 1.0 / hz
         end_time = time.monotonic() + seconds
         while time.monotonic() < end_time:

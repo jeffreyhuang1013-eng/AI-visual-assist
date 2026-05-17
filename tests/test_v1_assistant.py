@@ -85,6 +85,8 @@ class VisualAssistV1Tests(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             app.run(seconds=0.1, hz=0)
+        with self.assertRaises(ValueError):
+            app.run(seconds=0.1, hz=-1)
 
 
 if __name__ == "__main__":
