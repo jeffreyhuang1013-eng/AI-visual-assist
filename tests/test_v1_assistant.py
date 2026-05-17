@@ -83,10 +83,12 @@ class VisualAssistV1Tests(unittest.TestCase):
             memory=RecentObjectMemory(),
         )
 
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegex(ValueError, "hz must be greater than 0, got 0"):
             app.run(seconds=0.1, hz=0)
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegex(ValueError, "hz must be greater than 0, got -1"):
             app.run(seconds=0.1, hz=-1)
+        with self.assertRaisesRegex(ValueError, "seconds must be greater than 0, got 0"):
+            app.run(seconds=0, hz=1)
 
 
 if __name__ == "__main__":

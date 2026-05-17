@@ -11,6 +11,8 @@ The idea is to use a Jetson Orin Nano and an OAK-D Lite depth camera to recogniz
 4. Spoken response output (`Speaker`)
 5. Local memory for recently seen objects (`RecentObjectMemory`)
 
+Python version: 3.9+.
+
 Run locally:
 
 ```bash

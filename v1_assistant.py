@@ -161,6 +161,8 @@ class VisualAssistV1:
 
     def run(self, seconds: float = 5.0, hz: float = 2.0) -> None:
         """Run the real-time detection loop for a fixed duration."""
+        if seconds <= 0:
+            raise ValueError(f"seconds must be greater than 0, got {seconds}")
         if hz <= 0:
             raise ValueError(f"hz must be greater than 0, got {hz}")
         interval = 1.0 / hz
