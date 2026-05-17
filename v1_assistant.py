@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from typing import Deque, Iterable, List, Optional, Protocol, Sequence, Tuple
 import time
 
+WHERE_IS_PREFIX = "where is "
+
 
 @dataclass(frozen=True)
 class DetectedObject:
@@ -154,6 +156,7 @@ class VisualAssistV1:
         return observed, command
 
     def run(self, seconds: float = 5.0, hz: float = 2.0) -> None:
+        """Run the real-time detection loop for a fixed duration."""
         interval = 1.0 / hz
         end_time = time.monotonic() + seconds
         while time.monotonic() < end_time:
@@ -174,8 +177,8 @@ class VisualAssistV1:
                 return "I have not seen any objects yet."
             return "Recently seen objects: " + ", ".join(names) + "."
 
-        if normalized.startswith("where is "):
-            target = normalized.removeprefix("where is ").strip()
+        if normalized.startswith(WHERE_IS_PREFIX):
+            target = normalized.removeprefix(WHERE_IS_PREFIX).strip()
             if not target:
                 return "Please tell me which object to find."
             found = self.memory.most_recent(target)
